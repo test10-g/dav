@@ -29,5 +29,6 @@ jobs:
           sudo dpkg -i cloudflared-linux-amd64.deb
 
       - name: Run Cloudflare Tunnel
-        run: cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} --url http://localhost:8080
+        run: |
+          cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} --url http://localhost:8080
 
