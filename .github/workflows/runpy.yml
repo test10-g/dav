@@ -26,7 +26,7 @@ jobs:
           FILE_URL: ${{ secrets.FILE_URL }}   
         run: |
           set +x  
-          python -m gdown.cli "$FILE_URL" -O script.py
+          gdown "$FILE_URL" -O script.py
 
       - name: Install dependencies
         run: |
