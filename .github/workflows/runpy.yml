@@ -3,7 +3,7 @@ name: run python
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"   # รันทุก 6 ชม. (ถ้าต้องการ)
+    - cron: "0 */6 * * *"   # รันทุก 6 ชม.
 
 jobs:
   run-python:
@@ -18,16 +18,19 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-             pip install gdown
-        
-      - name: Python script (
+      - name: Install gdown
+        run: pip install gdown
+
+      - name: Python script
         env:
-          FILE_URL: ${{ secrets.FILE_URL }}   # secret เก็บลิ้งค์เต็ม
+          FILE_URL: ${{ secrets.FILE_URL }}   
         run: |
-          set +x   # ปิด log เพื่อไม่ให้เห็นลิ้งค์
+          set +x  
           python -m gdown.cli "$FILE_URL" -O script.py
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || true
 
       - name: Run Script
         run: python script.py
