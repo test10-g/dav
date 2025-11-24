@@ -36,8 +36,7 @@ jobs:
           sleep 5
 
           # รัน Cloudflare Tunnel ไปที่ Rclone
-          nohup cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} \
-            --url http://localhost:8080 > cloudflared.log 2>&1 &
+          nohup cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} 
 
           echo "Rclone WebDAV is running on localhost:8080 via Cloudflare Tunnel"
 
