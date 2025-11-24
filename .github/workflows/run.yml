@@ -1,0 +1,29 @@
+name: Run Python from Google Drive (Hidden Link)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"   # รันทุก 6 ชม. (ถ้าต้องการ)
+
+jobs:
+  run-python:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Download Python script (hidden)
+        env:
+          FILE_URL: ${{ secrets.FILE_URL}}  
+        run: |
+          set +x   
+          python -m gdown.cli "$FILE_URL" -O script.py
+
+      - name: Run Script
+        run: python script.py
