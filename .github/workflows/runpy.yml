@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -20,9 +20,9 @@ jobs:
 
       - name: Download Python script (hidden)
         env:
-          FILE_URL: ${{ secrets.FILE_URL}}  
+          FILE_URL: ${{ secrets.FILE_URL }}   # secret เก็บลิ้งค์เต็ม
         run: |
-          set +x   
+          set +x   # ปิด log เพื่อไม่ให้เห็นลิ้งค์
           python -m gdown.cli "$FILE_URL" -O script.py
 
       - name: Run Script
