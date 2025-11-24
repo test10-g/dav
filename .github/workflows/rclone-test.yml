@@ -33,19 +33,18 @@ jobs:
           # รอให้ Rclone เริ่มทำงาน
           sleep 5
 
-          # รัน Cloudflare Tunnel แบบ background และบันทึก log
+         # รัน Cloudflare Tunnel แบบ background
           nohup cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} > cloudflared.log 2>&1 &
 
-          # รอให้ tunnel สร้าง URL
-          sleep 10
+        # รอให้ tunnel เชื่อมต่อ (20 วินาที)
+          sleep 20
 
-          # แสดง public URL จาก log
+        # ดึง public URL จาก tunnel info
+          PUBLIC_URL=$(cloudflared tunnel info e75d4d6e-c05b-47d1-8963-08950280cba2 | grep -oP 'https://[a-z0-9.-]+\.trycloudflare\.com' | head -n1)
+
           echo "==============================="
-          echo "WebDAV via Cloudflare Tunnel URL:"
-          grep -oP 'https://[a-z0-9.-]+\.trycloudflare\.com' cloudflared.log | head -n 1
+          echo "WebDAV via Cloudflare Tunnel URL: $PUBLIC_URL"
           echo "Username: ${{ secrets.WEBDAV_USER }}"
           echo "Password: ${{ secrets.WEBDAV_PASS }}"
           echo "==============================="
 
-          # รัน 1 ชั่วโมง (3600 วินาที) แล้วจบ workflow
-          sleep 3600
