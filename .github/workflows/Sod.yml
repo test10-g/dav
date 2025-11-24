@@ -1,9 +1,9 @@
-name: run MOVIE747HD
+name: run Sod
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"   # รันทุก 6 ชม.
+    - cron: "0 */1 * * *"   # รันทุก 1 ชม.
 
 jobs:
   run-python:
@@ -23,14 +23,14 @@ jobs:
 
       - name: Python script
         env:
-          FILE_URL: ${{ secrets.FILE_MOVIE747HD }}   
+          FILE_URL: ${{ secrets.SOD }}   
         run: |
           set +x  
           gdown "$FILE_URL" -O script.py
 
       - name: Install dependencies
         run: |
-          pip install requests beautifulsoup4
+          pip install -r requirements.txt || true
 
       - name: Run Script
         run: python script.py
