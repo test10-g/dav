@@ -40,3 +40,7 @@ jobs:
             --url http://localhost:8080 > cloudflared.log 2>&1 &
 
           echo "Rclone WebDAV is running on localhost:8080 via Cloudflare Tunnel"
+
+          
+          # รัน 6 ชั่วโมง (21600 วินาที) แล้วจบ
+          sleep 21600
