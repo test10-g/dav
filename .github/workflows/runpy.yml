@@ -21,6 +21,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
         
+        run: pip install gdown
+        
       - name: Python script (
         env:
           FILE_URL: ${{ secrets.FILE_URL }}   # secret เก็บลิ้งค์เต็ม

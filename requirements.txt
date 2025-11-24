@@ -7,4 +7,3 @@ tqdm
 colorama
 lxml
 cloudscraper
-gdown
