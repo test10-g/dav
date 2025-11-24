@@ -2,8 +2,8 @@ name: rclone WebDAV
 
 on:
   schedule:
-    - cron: "0 */6 * * *"        # เปิดเองทุก 6 ชั่วโมง
-  workflow_dispatch:             # กดเองได้ด้วย
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 jobs:
   serve:
@@ -21,6 +21,7 @@ jobs:
       - name: Serve WebDAV
         run: |
           nohup rclone serve webdav gdrive:/ --addr :8080 --user ${{ secrets.WEBDAV_USER }} --pass ${{ secrets.WEBDAV_PASS }} &
+          sleep 10
 
       - name: Install cloudflared
         run: |
@@ -28,4 +29,5 @@ jobs:
           sudo dpkg -i cloudflared-linux-amd64.deb
 
       - name: Run Cloudflare Tunnel
-        run: cloudflared tunnel run --token ${{ secrets.CF_TOKEN }}
+        run: |
+          cloudflared tunnel run --name oungdoonung
