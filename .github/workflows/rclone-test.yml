@@ -59,3 +59,6 @@ jobs:
           echo "Username: ${{ secrets.WEBDAV_USER }}"
           echo "Password: ${{ secrets.WEBDAV_PASS }}"
           echo "==============================="
+
+          # รัน workflow 6 ชั่วโมง
+          sleep 21600
