@@ -1,4 +1,4 @@
-name: Run Python
+name: run python
 
 on:
   workflow_dispatch:
