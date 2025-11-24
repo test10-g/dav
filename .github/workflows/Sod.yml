@@ -3,7 +3,7 @@ name: run Sod
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */1 * * *"   # รันทุก 1 ชม.
+    - cron: "*/15 * * * *"  # รันทุก 15 นาที
 
 jobs:
   run-python:
