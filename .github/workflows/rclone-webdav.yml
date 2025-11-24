@@ -1,9 +1,9 @@
-name: rclone WebDAV
+name: rclone WebDAV via Cloudflare
 
 on:
   schedule:
-    - cron: "0 */6 * * *"
-  workflow_dispatch:
+    - cron: "0 */6 * * *"  # รันทุก 6 ชั่วโมง
+  workflow_dispatch:        # รันด้วยตนเองได้
 
 jobs:
   serve:
@@ -11,24 +11,32 @@ jobs:
 
     steps:
       - name: Install rclone
-        run: curl https://rclone.org/install.sh | sudo bash
+        run: |
+          curl https://rclone.org/install.sh | sudo bash
 
       - name: Setup rclone config
         run: |
           mkdir -p ~/.config/rclone
           echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
 
-      - name: Serve WebDAV
-        run: |
-          nohup rclone serve webdav gdrive-mx:/ --addr :8080 --user ${{ secrets.WEBDAV_USER }} --pass ${{ secrets.WEBDAV_PASS }} &
-          sleep 5
-
       - name: Install cloudflared
         run: |
           wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
           sudo dpkg -i cloudflared-linux-amd64.deb
 
-      - name: Run Cloudflare Tunnel
+      - name: Serve WebDAV + Cloudflare Tunnel
         run: |
-          cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} --url http://localhost:8080
+          # รัน Rclone WebDAV แบบ background
+          nohup rclone serve webdav gdrive-mx:/ \
+            --addr :8080 \
+            --user ${{ secrets.WEBDAV_USER }} \
+            --pass ${{ secrets.WEBDAV_PASS }} > rclone.log 2>&1 &
+          
+          # รอให้ Rclone เริ่มทำงาน
+          sleep 5
 
+          # รัน Cloudflare Tunnel ไปที่ Rclone
+          nohup cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} \
+            --url http://localhost:8080 > cloudflared.log 2>&1 &
+
+          echo "Rclone WebDAV is running on localhost:8080 via Cloudflare Tunnel"
