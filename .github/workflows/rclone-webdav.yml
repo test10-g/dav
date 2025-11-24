@@ -20,8 +20,8 @@ jobs:
 
       - name: Serve WebDAV
         run: |
-          nohup rclone serve webdav gdrive:/ --addr :8080 --user ${{ secrets.WEBDAV_USER }} --pass ${{ secrets.WEBDAV_PASS }} &
-          sleep 10
+          nohup rclone serve webdav gdrive-mx:/ --addr :8080 --user ${{ secrets.WEBDAV_USER }} --pass ${{ secrets.WEBDAV_PASS }} &
+          sleep 5
 
       - name: Install cloudflared
         run: |
@@ -29,5 +29,5 @@ jobs:
           sudo dpkg -i cloudflared-linux-amd64.deb
 
       - name: Run Cloudflare Tunnel
-        run: |
-          cloudflared tunnel run --name oungdoonung
+        run: cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} --url http://localhost:8080
+
