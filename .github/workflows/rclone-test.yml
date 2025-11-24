@@ -1,19 +1,51 @@
-- name: Serve WebDAV + Cloudflare Tunnel
-  run: |
-    nohup rclone serve webdav gdrive-mx:/ \
-      --addr :8080 \
-      --user ${{ secrets.WEBDAV_USER }} \
-      --pass ${{ secrets.WEBDAV_PASS }} > rclone.log 2>&1 &
+name: Rclone WebDAV via Cloudflare (1h)
 
-    sleep 5
+on:
+  workflow_dispatch:
 
-    nohup cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} > cloudflared.log 2>&1 &
+jobs:
+  serve:
+    runs-on: ubuntu-latest
 
-    echo "Rclone WebDAV is running via Cloudflare Tunnel"
-    
-    # แสดง URL ของ tunnel ใน log
-    sleep 5
-    cloudflared tunnel list
+    steps:
+      - name: Install rclone
+        run: |
+          curl https://rclone.org/install.sh | sudo bash
 
-    # รัน 6 ชั่วโมง
-    sleep 21600
+      - name: Setup rclone config
+        run: |
+          mkdir -p ~/.config/rclone
+          echo "${{ secrets.RCLONE_CONFIG }}" > ~/.config/rclone/rclone.conf
+
+      - name: Install cloudflared
+        run: |
+          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+          sudo dpkg -i cloudflared-linux-amd64.deb
+
+      - name: Serve WebDAV + Cloudflare Tunnel
+        run: |
+          # รัน Rclone WebDAV แบบ background
+          nohup rclone serve webdav gdrive-mx:/ \
+            --addr :8080 \
+            --user ${{ secrets.WEBDAV_USER }} \
+            --pass ${{ secrets.WEBDAV_PASS }} > rclone.log 2>&1 &
+
+          # รอให้ Rclone เริ่มทำงาน
+          sleep 5
+
+          # รัน Cloudflare Tunnel แบบ background และบันทึก log
+          nohup cloudflared tunnel run --token ${{ secrets.CF_TOKEN }} > cloudflared.log 2>&1 &
+
+          # รอให้ tunnel สร้าง URL
+          sleep 10
+
+          # แสดง public URL จาก log
+          echo "==============================="
+          echo "WebDAV via Cloudflare Tunnel URL:"
+          grep -oP 'https://[a-z0-9.-]+\.trycloudflare\.com' cloudflared.log | head -n 1
+          echo "Username: ${{ secrets.WEBDAV_USER }}"
+          echo "Password: ${{ secrets.WEBDAV_PASS }}"
+          echo "==============================="
+
+          # รัน 1 ชั่วโมง (3600 วินาที) แล้วจบ workflow
+          sleep 3600
