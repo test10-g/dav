@@ -1,4 +1,4 @@
-name: Run Python from Google Drive (Hidden Link)
+name: Run Python
 
 on:
   workflow_dispatch:
