@@ -2,8 +2,8 @@ name: run LIVE_MOVIE
 
 on:
   workflow_dispatch:
-  #schedule:
-    #- cron: "0 */5 * * *"   # รันทุก 1 ชม.
+  schedule:
+    - cron: "0 */5 * * *"   # รันทุก 5 ชม.
 
 jobs:
   run-python:

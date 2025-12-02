@@ -2,8 +2,8 @@ name: run LIVE_18
 
 on:
   workflow_dispatch:
-  #schedule:
-    #- cron: "0 */5 * * *"   # รันทุก 1 ชม.
+  schedule:
+    - cron: "0 */8 * * *"   # รันทุก 8 ชม.
 
 jobs:
   run-python:
