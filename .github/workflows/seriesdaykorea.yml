@@ -2,8 +2,8 @@ name: run SERIESDAY korea
 
 on:
   workflow_dispatch:
-  #schedule:
-    #- cron: "0 */6 * * *"   # รันทุก 6 ชม.
+  schedule:
+    - cron: "0 */6 * * *"   # รันทุก 6 ชม.
 
 jobs:
   run-python:

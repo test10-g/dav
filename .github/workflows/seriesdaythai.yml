@@ -2,8 +2,8 @@ name: run SERIESDAY Thai
 
 on:
   workflow_dispatch:
-  #schedule:
-    #- cron: "0 */2 * * *"   # รันทุก 2 ชม.
+  schedule:
+    - cron: "0 */6 * * *"   # รันทุก 6 ชม.
 
 jobs:
   run-python:
