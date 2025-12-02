@@ -1,9 +1,9 @@
-name: run anime-indy themovie
+name: run LIVE_MOVIE
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 */1 * * *"   # รันทุก 1 ชม.
+  #schedule:
+    #- cron: "0 */5 * * *"   # รันทุก 1 ชม.
 
 jobs:
   run-python:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Python script
         env:
-          FILE_URL: ${{ secrets.INDY_MOVIE }}   
+          FILE_URL: ${{ secrets.LIVE_MOVIE }}   
         run: |
           set +x  
           gdown "$FILE_URL" -O script.py

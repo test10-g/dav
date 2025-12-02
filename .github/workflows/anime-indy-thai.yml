@@ -3,7 +3,7 @@ name: run anime-indy Thai
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"   # รันทุก 6 ชม.
+    - cron: "0 */1 * * *"   # รันทุก 1 ชม.
 
 jobs:
   run-python:
