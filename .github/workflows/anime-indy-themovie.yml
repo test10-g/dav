@@ -2,8 +2,8 @@ name: run anime-indy themovie
 
 on:
   workflow_dispatch:
-  #schedule:
-    #- cron: "0 */8 * * *"   # รันทุก 8 ชม.
+  schedule:
+    - cron: "0 */4 * * *"   # รันทุก 8 ชม.
 
 jobs:
   run-python:
