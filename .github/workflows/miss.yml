@@ -1,4 +1,4 @@
-name: run หนังสั้น
+name: run MISSA
 
 on:
   workflow_dispatch:
