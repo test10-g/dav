@@ -3,7 +3,7 @@ name: run SERIESDAY ปี2025
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */6 * * *"   # รันทุก 6 ชม.
+    - cron: "0 */7 * * *"   # รันทุก 6 ชม.
 
 jobs:
   run-python:
