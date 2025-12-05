@@ -1,4 +1,4 @@
-name: run SERIESDAY ฝรั่ง
+name: run SERIESDAY จีน
 
 on:
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Python script
         env:
-          FILE_URL: ${{ secrets.SERIESDAY_US }}   
+          FILE_URL: ${{ secrets.SERIESDAY_CH }}   
         run: |
           set +x  
           gdown "$FILE_URL" -O script.py
