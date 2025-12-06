@@ -1,9 +1,9 @@
-name: run SERIESDAY ญี่ปุ่น
+name: run buzz22_series
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */3 * * *"   # รันทุก 6 ชม.
+    - cron: "0 */6 * * *"   # รันทุก 6 ชม.
 
 jobs:
   run-python:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Python script
         env:
-          FILE_URL: ${{ secrets.SERIESDAY_JP }}   
+          FILE_URL: ${{ secrets.BUZZ22_SERIES }}   
         run: |
           set +x  
           gdown "$FILE_URL" -O script.py
