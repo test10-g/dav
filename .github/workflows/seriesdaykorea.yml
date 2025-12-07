@@ -3,7 +3,7 @@ name: run SERIESDAY เกาหลี
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */7 * * *"   # รันทุก 6 ชม.
+    - cron: "0 */8 * * *"   # รันทุก 6 ชม.
 
 jobs:
   run-python:
