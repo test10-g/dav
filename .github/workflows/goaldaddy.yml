@@ -1,0 +1,40 @@
+name: Update GoalDaddy to Google Drive
+
+on:
+  schedule:
+    - cron: '0 */5 * * *' # รันทุก 5 ชม.
+  workflow_dispatch:
+
+jobs:
+  scrape_and_upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360  # ให้เวลารันสูงสุด 6 ชม.
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install gdown
+        run: pip install gdown
+
+      - name: Python script
+        env:
+          FILE_URL: ${{ secrets.GOALDADDY }}   
+        run: |
+          set +x  
+          gdown "$FILE_URL" -O script.py
+
+      - name: Install dependencies
+        run: |
+          pip install playwright beautifulsoup4 requests
+          playwright install chromium
+          playwright install-deps
+
+
+      - name: Run Script
+        run: python script.py
