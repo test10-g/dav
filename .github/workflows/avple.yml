@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install gdown requests beautifulsoup4 googletrans==4.0.0-rc1 lxml
+          pip install gdown requests beautifulsoup4 lxml
 
       - name: Download Script
         env:
