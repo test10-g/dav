@@ -1,9 +1,9 @@
-name: run SERIESDAY ปี2025
+name: run EZTH
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */2 * * *"   # รันทุก 6 ชม.
+    - cron: "0 */7 * * *"   # รันทุก 6 ชม.
 
 jobs:
   run-python:
@@ -23,7 +23,7 @@ jobs:
 
       - name: Python script
         env:
-          FILE_URL: ${{ secrets.SERIESDAY_2025 }}   
+          FILE_URL: ${{ secrets.EZTH }}   
         run: |
           set +x  
           gdown "$FILE_URL" -O script.py
