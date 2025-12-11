@@ -1,9 +1,9 @@
-name: run EZSUB
+name: run EZMOVIE
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 */7 * * *"   # รันทุก 6 ชม.
+  #schedule:
+  #  - cron: "0 */7 * * *"   # รันทุก 6 ชม.
 
 jobs:
   run-python:
