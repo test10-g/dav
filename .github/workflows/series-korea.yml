@@ -3,7 +3,7 @@ name: run series-korea
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 */8 * * *"   # รันทุก 5 ชม.
+    - cron: "0 */1 * * *"   # รันทุก 5 ชม.
 
 jobs:
   run-python:
